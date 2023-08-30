@@ -7,7 +7,7 @@ function Navbar() {
     <>
       <Box display="flex" bg="#161712" p={4} justifyContent="space-between">
         <Heading color="white">DEX Swap</Heading>
-        <Button bg="#b7f01a">Metamask</Button>
+        <Button bg="#b7f01a">Connect Wallet</Button>
       </Box>
     </>
   );

@@ -24,7 +24,7 @@ export default function Body() {
           </Box>
           <TokenInput />
         </VStack>
-        <Text mt={10} mb={4}>
+        <Text mt={10} mb={4} fontSize="lg">
           Estimated Gas:
         </Text>
         <Button bg="#b7f01a" w="100%" h={50} borderRadius="3xl">

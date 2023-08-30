@@ -24,8 +24,8 @@ export default function Token() {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>
-        {selectedItem || "Token?"}
+      <Button colorScheme="whiteAlpha" onClick={() => setIsOpen(true)}>
+        {selectedItem || "Select Token"}
       </Button>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
