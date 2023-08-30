@@ -37,7 +37,7 @@ export default function Body() {
         <Text mt={10} mb={4} fontSize="lg">
           Estimated Gas:
         </Text>
-        <Button bg={accent} w="100%" h={50} borderRadius="3xl">
+        <Button isDisabled bg={accent} w="100%" h={50} borderRadius="3xl">
           Review Swap
         </Button>
       </Box>
