@@ -1,19 +1,16 @@
 // import { useState } from 'react'
-import React from 'react'
-import { Box, Heading } from '@chakra-ui/react'
-import { Button } from '@chakra-ui/react'
+import React from "react";
+import { Box, Heading } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 function Navbar() {
-
   return (
     <>
-      <Box display='flex' bg='gray' p={4} justifyContent='space-between'>
-        <Heading>DEX Swap</Heading>
-        <Button>
-          Metamask
-        </Button>
+      <Box display="flex" bg="#161712" p={4} justifyContent="space-between">
+        <Heading color="white">DEX Swap</Heading>
+        <Button bg="#b7f01a">Metamask</Button>
       </Box>
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

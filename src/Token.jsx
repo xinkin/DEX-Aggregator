@@ -13,7 +13,7 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 
-export default function Example() {
+export default function Token() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
 
@@ -25,13 +25,13 @@ export default function Example() {
   return (
     <>
       <Button onClick={() => setIsOpen(true)}>
-        {selectedItem || "Select an item"}
+        {selectedItem || "Token?"}
       </Button>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Select an item</ModalHeader>
+          <ModalHeader>Select a token</ModalHeader>
           <ModalBody>
             <Menu>
               <MenuButton>{selectedItem || "Select an item"}</MenuButton>
