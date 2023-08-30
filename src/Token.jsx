@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Button,
   Modal,
@@ -7,24 +9,66 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
+  List,
+  ListItem,
+  Image,
+  Box,
+  Divider,
 } from "@chakra-ui/react";
 
-export default function Token() {
+export default function Token({ accent }) {
+  const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  const [selectedURI, setSelectedURI] = useState("");
 
-  const handleSelect = (item) => {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          "https://tokens.coingecko.com/uniswap/all.json",
+        );
+        const first50 = response.data.tokens.slice(0, 50);
+        setData(first50);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const tokens = data.map((token) => {
+    return (
+      <div key={token.address}>
+        <Box
+          display="flex"
+          onClick={() => handleSelect(token.logoURI, token.symbol)}
+        >
+          <Image src={token.logoURI} />
+          <ListItem ml={5}>{token.symbol}</ListItem>
+        </Box>
+        <Divider my={2} />
+      </div>
+    );
+  });
+
+  console.log(data);
+
+  const handleSelect = (URI, item) => {
     setSelectedItem(item);
+    setSelectedURI(URI);
     setIsOpen(false);
   };
 
   return (
     <>
-      <Button colorScheme="whiteAlpha" onClick={() => setIsOpen(true)}>
+      <Button
+        leftIcon={
+          selectedItem ? <img src={selectedURI} width="20" height="20" /> : null
+        }
+        colorScheme="whiteAlpha"
+        onClick={() => setIsOpen(true)}
+      >
         {selectedItem || "Select Token"}
       </Button>
 
@@ -33,20 +77,7 @@ export default function Token() {
         <ModalContent>
           <ModalHeader>Select a token</ModalHeader>
           <ModalBody>
-            <Menu>
-              <MenuButton>{selectedItem || "Select an item"}</MenuButton>
-              <MenuList>
-                <MenuItem onClick={() => handleSelect("Item 1")}>
-                  Item 1
-                </MenuItem>
-                <MenuItem onClick={() => handleSelect("Item 2")}>
-                  Item 2
-                </MenuItem>
-                <MenuItem onClick={() => handleSelect("Item 3")}>
-                  Item 3
-                </MenuItem>
-              </MenuList>
-            </Menu>
+            <List spacing={2}>{tokens}</List>
           </ModalBody>
 
           <ModalFooter>

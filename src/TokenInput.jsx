@@ -1,6 +1,6 @@
 import { Box, Center, NumberInput, NumberInputField } from "@chakra-ui/react";
 import Token from "./Token";
-export default function TokenInput() {
+export default function TokenInput({ accent }) {
   return (
     <Box
       borderRadius="xl"
@@ -11,7 +11,7 @@ export default function TokenInput() {
       height="40%"
     >
       <Center>
-        <Token />
+        <Token accent={accent} />
       </Center>
       <NumberInput defaultValue={0} precision={1} size="lg" marginLeft="auto">
         <NumberInputField />

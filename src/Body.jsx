@@ -11,29 +11,33 @@ import { Divider, AbsoluteCenter } from "@chakra-ui/react";
 // accent = #b7f01a
 
 export default function Body() {
+  const bg = "#161712";
+  const primary = "#0d8fbf";
+  const secondary = "#042c39";
+  const accent = "#b7f01a";
   return (
     <Flex
       height={`calc(100vh - 75px)`}
       alignItems="center"
       justifyContent="center"
-      bg="#161712"
+      bg={bg}
     >
-      <Box width="xl" bg="#0d8fbf" borderRadius="2xl" color="white" p={10}>
+      <Box width="xl" bg={primary} borderRadius="2xl" color="white" p={10}>
         <Heading size="xl">Swap</Heading>
         <Divider my={4} />
         <VStack spacing={4}>
-          <TokenInput />
-          <Box position="relative" padding="4" bg="#0d8fbf">
+          <TokenInput accent={accent} />
+          <Box position="relative" padding="4" bg={primary}>
             <AbsoluteCenter px="4">
               <MdOutlineSwapCalls size={35} />
             </AbsoluteCenter>
           </Box>
-          <TokenInput />
+          <TokenInput accent={accent} />
         </VStack>
         <Text mt={10} mb={4} fontSize="lg">
           Estimated Gas:
         </Text>
-        <Button bg="#b7f01a" w="100%" h={50} borderRadius="3xl">
+        <Button bg={accent} w="100%" h={50} borderRadius="3xl">
           Review Swap
         </Button>
       </Box>
