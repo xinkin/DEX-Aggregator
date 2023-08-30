@@ -2,7 +2,13 @@ import React from "react";
 import TokenInput from "./TokenInput";
 import { MdOutlineSwapCalls } from "react-icons/md";
 import { Box, Heading, VStack, Text, Button, Flex } from "@chakra-ui/react";
-import { Divider, Center, AbsoluteCenter } from "@chakra-ui/react";
+import { Divider, AbsoluteCenter } from "@chakra-ui/react";
+
+// text = #ffffff
+// bg = #161712
+// primary = #0d8fbf
+// secondary = #042c39
+// accent = #b7f01a
 
 export default function Body() {
   return (
