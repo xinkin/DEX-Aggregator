@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import TokenInput from "./TokenInput";
 import { MdOutlineSwapCalls } from "react-icons/md";
 import { Box, Heading, VStack, Text, Button, Flex } from "@chakra-ui/react";
@@ -10,11 +11,12 @@ import { Divider, AbsoluteCenter } from "@chakra-ui/react";
 // secondary = #042c39
 // accent = #b7f01a
 
-export default function Body() {
+export default function Body({ isDisabled }) {
   const bg = "#161712";
   const primary = "#0d8fbf";
   const secondary = "#042c39";
   const accent = "#b7f01a";
+
   return (
     <Flex
       height={`calc(100vh - 75px)`}
@@ -37,7 +39,13 @@ export default function Body() {
         <Text mt={10} mb={4} fontSize="lg">
           Estimated Gas:
         </Text>
-        <Button isDisabled bg={accent} w="100%" h={50} borderRadius="3xl">
+        <Button
+          isDisabled={isDisabled}
+          bg={accent}
+          w="100%"
+          h={50}
+          borderRadius="3xl"
+        >
           Review Swap
         </Button>
       </Box>
