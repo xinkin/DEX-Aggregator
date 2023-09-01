@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 import {
   Button,
   Modal,
@@ -16,33 +16,19 @@ import {
   Divider,
 } from "@chakra-ui/react";
 
-export default function Token({ accent }) {
-  const [data, setData] = useState([]);
+export default function Token({ onChange, data }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const [selectedURI, setSelectedURI] = useState("");
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          "https://tokens.coingecko.com/uniswap/all.json",
-        );
-        const first50 = response.data.tokens.slice(0, 50);
-        setData(first50);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
-  }, []);
 
   const tokens = data.map((token) => {
     return (
       <div key={token.address}>
         <Box
           display="flex"
-          onClick={() => handleSelect(token.logoURI, token.symbol)}
+          onClick={() =>
+            handleSelect(token.logoURI, token.symbol, token.address)
+          }
         >
           <Image src={token.logoURI} />
           <ListItem ml={5}>{token.symbol}</ListItem>
@@ -52,10 +38,9 @@ export default function Token({ accent }) {
     );
   });
 
-  console.log(data);
-
-  const handleSelect = (URI, item) => {
+  const handleSelect = (URI, item, taddress) => {
     setSelectedItem(item);
+    onChange(taddress);
     setSelectedURI(URI);
     setIsOpen(false);
   };
