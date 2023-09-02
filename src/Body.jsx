@@ -52,11 +52,11 @@ export default function Body({ isDisabled, data }) {
     }
     console.log("reviewSwap", reviewSwap);
     getSwapInfo();
+    console.log(swapInfo);
     setreviewSwap(false);
   }, [reviewSwap]);
 
-  console.log(swapInfo);
-  console.log(buyAmount);
+  // console.log(buyAmount);
 
   const handleAmountChange = (value) => {
     setsellAmount(value);
@@ -71,7 +71,7 @@ export default function Body({ isDisabled, data }) {
   };
   console.log(sellToken);
   console.log(buyToken);
-  console.log(sellAmount);
+  // console.log(sellAmount);
   return (
     <Flex
       height={`calc(100vh - 75px)`}
@@ -101,11 +101,19 @@ export default function Body({ isDisabled, data }) {
             data={data}
           />
         </VStack>
-        <Text mt={10} mb={4} fontSize="lg">
-          Estimated Gas: {swapInfo.gas}
+        <Text mt={10} mb={1} fontSize="lg">
+          Estimated Gas: {swapInfo.gasPrice} wei
+        </Text>
+        <Text mb={4} fontSize="lg">
+          Route:
+          {swapInfo.sources
+            ? ` ${swapInfo.sources
+                .find((source) => source.proportion === "1")
+                .name.replace("_", " ")}`
+            : null}
         </Text>
         <Button
-          isDisabled={isDisabled}
+          // isDisabled={isDisabled}
           bg={accent}
           w="100%"
           h={50}

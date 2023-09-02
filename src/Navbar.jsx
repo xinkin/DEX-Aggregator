@@ -9,10 +9,11 @@ function Navbar({ setIsDisabled }) {
     <>
       <Box display="flex" bg="#161712" p={4} justifyContent="space-between">
         <Heading color="white">DEX Swap</Heading>
+        <ConnectButton />
         {/* <ConnectButton.Custom>
           <Button bg="#b7f01a">Connect Wallet</Button>
         </ConnectButton.Custom> */}
-        <WalletCon setisDisabled={setIsDisabled} />
+        {/* <WalletCon setisDisabled={setIsDisabled} /> */}
       </Box>
     </>
   );
