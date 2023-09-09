@@ -27,10 +27,10 @@ export default function Token({ onChange, data }) {
         <Box
           display="flex"
           onClick={() =>
-            handleSelect(token.logoURI, token.symbol, token.address)
+            handleSelect(token.logoURI, token.symbol, token.symbol)
           }
         >
-          <Image src={token.logoURI} />
+          <Image src={token.logoURI} boxSize="30px" />
           <ListItem ml={5}>{token.symbol}</ListItem>
         </Box>
         <Divider my={2} />

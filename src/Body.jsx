@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import TokenInput from "./TokenInput";
 import axios from "axios";
-//
+import { useSendTransaction } from "wagmi";
 import qs from "qs";
 import { MdOutlineSwapCalls } from "react-icons/md";
 import { Box, Heading, VStack, Text, Button, Flex } from "@chakra-ui/react";
 import { Divider, AbsoluteCenter } from "@chakra-ui/react";
+
 
 // text = #ffffff
 // bg = #161712
@@ -40,11 +41,11 @@ export default function Body({ isDisabled, data }) {
       if (reviewSwap) {
         try {
           const response = await axios.get(
-            `https://api.0x.org/swap/v1/price?${qs.stringify(params)}`,
+            `https://polygon.api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
             { headers },
           );
           setswapInfo(response.data);
-          setbuyAmount(swapInfo.price);
+          setbuyAmount(response.data.price);
         } catch (error) {
           console.log(error);
         }
@@ -55,8 +56,6 @@ export default function Body({ isDisabled, data }) {
     console.log(swapInfo);
     setreviewSwap(false);
   }, [reviewSwap]);
-
-  // console.log(buyAmount);
 
   const handleAmountChange = (value) => {
     setsellAmount(value);
@@ -69,9 +68,14 @@ export default function Body({ isDisabled, data }) {
   const handleBuyTokenChange = (value) => {
     setbuyToken(value);
   };
+
+  const { sendTransaction } = useSendTransaction({
+    to: swapInfo.to,
+    data: swapInfo.data,
+  });
+
   console.log(sellToken);
   console.log(buyToken);
-  // console.log(sellAmount);
   return (
     <Flex
       height={`calc(100vh - 75px)`}
@@ -121,6 +125,16 @@ export default function Body({ isDisabled, data }) {
           onClick={() => setreviewSwap(true)}
         >
           Review Swap
+        </Button>
+        <Button
+          mt={4}
+          bg={accent}
+          w="100%"
+          h={50}
+          borderRadius="3xl"
+          onClick={() => sendTransaction()}
+        >
+          Swap
         </Button>
       </Box>
     </Flex>
