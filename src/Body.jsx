@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import TokenInput from "./TokenInput";
 import axios from "axios";
-import { useSendTransaction } from "wagmi";
+import { useSendTransaction, usePrepareSendTransaction } from "wagmi";
+import { useAccount } from "wagmi";
 import qs from "qs";
 import { MdOutlineSwapCalls } from "react-icons/md";
 import { Box, Heading, VStack, Text, Button, Flex } from "@chakra-ui/react";
 import { Divider, AbsoluteCenter } from "@chakra-ui/react";
-
+import { parseEther } from "viem";
 
 // text = #ffffff
 // bg = #161712
@@ -21,6 +22,7 @@ export default function Body({ isDisabled, data }) {
   const secondary = "#042c39";
   const accent = "#b7f01a";
 
+  const { address, isConnected } = useAccount();
   const [sellToken, setsellToken] = useState("");
   const [buyToken, setbuyToken] = useState("");
   const [sellAmount, setsellAmount] = useState(0);
@@ -31,9 +33,10 @@ export default function Body({ isDisabled, data }) {
   useEffect(() => {
     async function getSwapInfo() {
       const params = {
-        sellToken: sellToken,
         buyToken: buyToken,
-        sellAmount: sellAmount * 10 ** 18,
+        sellToken: sellToken,
+        sellAmount: sellAmount * 1e18,
+        // takerAddress: address,
       };
       const headers = {
         "0x-api-key": "63efa87d-8185-4d60-a2d0-c8ccde5b2ee8",
@@ -41,7 +44,7 @@ export default function Body({ isDisabled, data }) {
       if (reviewSwap) {
         try {
           const response = await axios.get(
-            `https://polygon.api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
+            `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
             { headers },
           );
           setswapInfo(response.data);
@@ -54,7 +57,6 @@ export default function Body({ isDisabled, data }) {
     console.log("reviewSwap", reviewSwap);
     getSwapInfo();
     console.log(swapInfo);
-    setreviewSwap(false);
   }, [reviewSwap]);
 
   const handleAmountChange = (value) => {
@@ -69,12 +71,16 @@ export default function Body({ isDisabled, data }) {
     setbuyToken(value);
   };
 
-  const { sendTransaction } = useSendTransaction({
+  const { config } = usePrepareSendTransaction({
     to: swapInfo.to,
+    value: swapInfo.value,
     data: swapInfo.data,
+    gasPrice: swapInfo.gasPrice,
   });
 
-  console.log(sellToken);
+  const { sendTransaction } = useSendTransaction(config);
+
+  console.log(sellAmount);
   console.log(buyToken);
   return (
     <Flex
@@ -132,7 +138,7 @@ export default function Body({ isDisabled, data }) {
           w="100%"
           h={50}
           borderRadius="3xl"
-          onClick={() => sendTransaction()}
+          onClick={() => sendTransaction?.()}
         >
           Swap
         </Button>
