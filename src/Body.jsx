@@ -22,6 +22,9 @@ export default function Body({ isDisabled, data }) {
   const secondary = "#042c39";
   const accent = "#b7f01a";
 
+  const swapApi = process.env.REACT_APP_SWAPAPI;
+  const secret = process.env.REACT_APP_SECRET;
+
   const { address, isConnected } = useAccount();
   const [sellToken, setsellToken] = useState("");
   const [buyToken, setbuyToken] = useState("");
@@ -39,12 +42,12 @@ export default function Body({ isDisabled, data }) {
         // takerAddress: address,
       };
       const headers = {
-        "0x-api-key": "63efa87d-8185-4d60-a2d0-c8ccde5b2ee8",
+        "0x-api-key": secret,
       };
       if (reviewSwap) {
         try {
           const response = await axios.get(
-            `https://polygon.api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
+            `${swapApi}${qs.stringify(params)}`,
             { headers },
           );
           setswapInfo(response.data);

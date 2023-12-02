@@ -34,7 +34,6 @@ function App() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          // "https://tokens.coingecko.com/uniswap/all.json",
           "https://api-polygon-tokens.polygon.technology/tokenlists/popularTokens.tokenlist.json",
         );
         const first50 = response.data.tokens.slice(0, 50);
